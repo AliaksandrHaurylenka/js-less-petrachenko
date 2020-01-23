@@ -122,6 +122,8 @@ function start() {
   }
 
   let time = prompt('Введите дату в формате YYYY-MM-DD', '');
+
+  return money;
 }
 start();
 
@@ -131,25 +133,25 @@ let appData = {
   expenses: {},
   optionalExpenses: "",
   income: [],
-  savings: false
+  savings: true
 };
 console.log(appData);
 
-function chooseExpenses() {
-  for (let i = 0; i < 2; i++) {
-    let a = prompt("Введите обязательную статью расходов в этом месяце", ''),
-        b = +prompt("Во сколько обойдется?", '');
+// function chooseExpenses() {
+//   for (let i = 0; i < 2; i++) {
+//     let a = prompt("Введите обязательную статью расходов в этом месяце", ''),
+//         b = +prompt("Во сколько обойдется?", '');
   
-    if ((typeof(a) != null) && 
-        (typeof(b) != null) && 
-        a != "" && 
-        b != ""
-      ) {
-      appData.expenses[a] = b;
-    } 
-  }
-}
-chooseExpenses();
+//     if ((typeof(a) != null) && 
+//         (typeof(b) != null) && 
+//         a != "" && 
+//         b != ""
+//       ) {
+//       appData.expenses[a] = b;
+//     } 
+//   }
+// }
+// chooseExpenses();
 
 
 
@@ -166,6 +168,18 @@ if (appData.moneyPerDay < 20) {
 } else {
   console.log('Что-то пошло не так!');
 }
+
+// function checkSavings() {
+//   if(appData.savings == true) {
+//     let save = +prompt('Какова сумма накоплений?'),
+//         persent = +prompt('Под какой процент?');
+
+//     appData.monthIncome = (save/100/12)*persent;
+//     appData.monthIncome.toFixed();
+//     alert('Ваш доход в месяц с депозита составляет: ' + appData.monthIncome + ' рублей');    
+//   }
+// }
+// checkSavings();
 //Конец Задание №4
 
 
