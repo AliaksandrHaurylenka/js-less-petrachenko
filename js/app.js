@@ -184,12 +184,18 @@ let appData = {
   },
   chooseIncome: function() {
     let items = prompt('Что Вам даст дополнительный доход? (перечислите через запятую)', '');
-    if(isNaN(items) && items != '' && items !=null) {
+
+    while(items == null) {
+      items = prompt('Что Вам даст дополнительный доход? (перечислите через запятую)', '');
+    }
+
+    if(isNaN(items) && items != '') {   
       appData.income = items.split(', ');
+      
     }
     
     let item = prompt('Может что-то еще?', '');
-    if(isNaN(item)) {
+    if(isNaN(item && item != '')) {
       appData.income.push(item);
     }    
     appData.income.sort();
