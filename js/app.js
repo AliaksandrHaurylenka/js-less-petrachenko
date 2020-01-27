@@ -123,7 +123,7 @@ function start() {
 
   time = prompt('Введите дату в формате YYYY-MM-DD', '');
 }
-start();
+// start();
 
 let appData = {
   budget: money,
@@ -185,23 +185,27 @@ let appData = {
   chooseIncome: function() {
     let items = prompt('Что Вам даст дополнительный доход? (перечислите через запятую)', '');
 
-    while(items == null) {
+    while(items == null || !isNaN(items) || items == '') {
       items = prompt('Что Вам даст дополнительный доход? (перечислите через запятую)', '');
     }
 
-    if(isNaN(items) && items != '') {   
-      appData.income = items.split(', ');
-      
-    }
+    appData.income = items.split(', ');     
     
     let item = prompt('Может что-то еще?', '');
-    if(isNaN(item && item != '')) {
+    if(isNaN(item) && item != '') {
       appData.income.push(item);
     }    
     appData.income.sort();
   }
 };
 appData.chooseIncome();
+appData.income.forEach(function(item, i, arr) {
+  alert('Способы доп. заработка: ' + ++i + ". " + item);
+});
+console.log( "Наша программа включает в себя данные:");
+for(var key in appData) {
+  console.log(key + ': ' + appData[key]);
+}
 console.log(appData);
 
 //Конец Задание №4
