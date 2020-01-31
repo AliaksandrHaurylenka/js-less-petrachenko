@@ -28,6 +28,12 @@ let resultButton = document.getElementById('start'),
 
 let money, time;
 
+
+approve1.disabled = true;
+approve2.disabled = true;
+approve3.disabled = true;
+
+
 resultButton.addEventListener('click', function(){
   time = prompt('Введите дату в формате YYYY-MM-DD', '');
 
@@ -43,6 +49,10 @@ resultButton.addEventListener('click', function(){
   year.value = new Date(Date.parse(time)).getFullYear();
   month.value = new Date(Date.parse(time)).getMonth() + 1;
   day.value = new Date(Date.parse(time)).getDay();
+
+  approve1.disabled = false;
+  approve2.disabled = false;
+  approve3.disabled = false;
 });
 
 approve1.addEventListener('click', function(){
@@ -63,6 +73,7 @@ approve1.addEventListener('click', function(){
     } 
   }
 
+  appData.mandatoryExpensesSum = sum;
   expenses.textContent = sum;
 });
 
@@ -78,14 +89,15 @@ approve2.addEventListener('click', function(){
   }
 });
 
+
 approve3.addEventListener('click', function(){
   if(appData.budget != undefined){
-    appData.moneyPerDay = (appData.budget / 30).toFixed();
+    appData.moneyPerDay = ((appData.budget - appData.mandatoryExpensesSum) / 30).toFixed();
     daybudget.textContent = appData.moneyPerDay;
 
-    if (appData.moneyPerDay < 20) {
+    if (appData.moneyPerDay <= 20) {
       level.textContent = "У Вас минимальный уровень достатка";
-    } else if (appData.moneyPerDay > 20 && appData.moneyPerDay < 50) {
+    } else if (appData.moneyPerDay > 20 && appData.moneyPerDay <= 50) {
       level.textContent = "У Вас средний уровень достатка";
     } else if (appData.moneyPerDay > 50) {
       level.textContent = "У Вас высокий уровень достатка";
@@ -147,6 +159,7 @@ let appData = {
   optionalExpenses: {},
   income: [],
   savings: false,
+  mandatoryExpensesSum: 0,
 };
 
 
