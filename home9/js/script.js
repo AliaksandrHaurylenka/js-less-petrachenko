@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
   //Timer
-  let deadline = '2020-02-09';
+  let deadline = '2020-02-12';
 
   function getTimeRemaining(endtime){
     let t = Date.parse(endtime) - Date.parse(new Date()),
@@ -89,4 +89,52 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 
   setClock('timer', deadline);
+
+  // Modal
+  // let more = document.querySelector('.more'),
+  //     close = document.querySelector('.popup-close'),
+  //     overlay = document.querySelector('.overlay');
+
+  // more.addEventListener('click', function(){
+  //   overlay.style.display = 'block';
+  //   this.classList.add('more-splash');
+  //   document.body.style.overflow = 'hidden';
+  // });
+
+  // close.addEventListener('click', function(){
+  //   overlay.style.display = 'none';
+  //   more.classList.remove('more-splash');
+  //   document.body.style.overflow = '';
+  // });
+
+  function More(btn){
+    this.btn = document.querySelector('.' + btn);
+    this.close = document.querySelector('.popup-close');
+    this.overlay = document.querySelector('.overlay');
+
+    this.btn.addEventListener('click', function(){
+      // alert('ky');
+      // console.log(this);
+      function overlay(){
+        // console.log(this);
+        let overlay = document.querySelector('.overlay');
+        // console.log(overlay);
+        overlay.style.display = 'block';
+      }
+      overlay();
+      // this.overlay.style.display = 'block';
+      // this.classList.add('more-splash');
+      // document.body.style.overflow = 'hidden';
+    });
+
+    this.close.addEventListener('click', function(){
+      this.overlay.style.display = 'none';
+      this.btn.classList.remove('more-splash');
+      document.body.style.overflow = '';
+    });
+  }
+
+  let tabSection = new More('description-btn');
+  let timerSection = new More('more');
+
 });
