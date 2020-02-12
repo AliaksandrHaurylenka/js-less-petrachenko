@@ -107,34 +107,38 @@ window.addEventListener('DOMContentLoaded', function(){
   //   document.body.style.overflow = '';
   // });
 
-  function More(btn){
+  function More(btn, btnClose){
     this.btn = document.querySelector('.' + btn);
-    this.close = document.querySelector('.popup-close');
-    this.overlay = document.querySelector('.overlay');
+    this.close = document.querySelector('.' + btnClose);
+    // this.overlay = document.querySelector('.overlay');
+
+    // console.log(this.overlay);
+
 
     this.btn.addEventListener('click', function(){
-      // alert('ky');
-      // console.log(this);
-      function overlay(){
-        // console.log(this);
+      function displayBlock(){
         let overlay = document.querySelector('.overlay');
-        // console.log(overlay);
         overlay.style.display = 'block';
       }
-      overlay();
-      // this.overlay.style.display = 'block';
-      // this.classList.add('more-splash');
-      // document.body.style.overflow = 'hidden';
+      displayBlock();
+      this.classList.add('more-splash');
+      document.body.style.overflow = 'hidden';
     });
 
     this.close.addEventListener('click', function(){
-      this.overlay.style.display = 'none';
-      this.btn.classList.remove('more-splash');
+      function displayNone(btn){
+        let overlay = document.querySelector('.overlay'),
+            button = document.querySelector('.' + btn);       
+        
+        overlay.style.display = 'none';
+        button.classList.remove('more-splash');
+      }
+      displayNone(btn);
       document.body.style.overflow = '';
     });
   }
 
-  let tabSection = new More('description-btn');
-  let timerSection = new More('more');
+  let tabSection = new More('description-btn', 'popup-close');
+  let timerSection = new More('more', 'popup-close');
 
 });
