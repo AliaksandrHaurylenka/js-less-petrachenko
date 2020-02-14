@@ -1,39 +1,77 @@
 window.addEventListener('DOMContentLoaded', function(){
   'use strict';
 
-  let info = document.querySelector('.info-header'),
-      tab = document.querySelectorAll('.info-header-tab'),
-      tabContent = document.querySelectorAll('.info-tabcontent');
+  // let info = document.querySelector('.info-header'),
+  //     tab = document.querySelectorAll('.info-header-tab'),
+  //     tabContent = document.querySelectorAll('.info-tabcontent');
 
-  function hideTabContent(a){
-    for(let i = a; i < tabContent.length; i++){
-      tabContent[i].classList.remove('show');
-      tabContent[i].classList.add('hide');
+  // function hideTabContent(a){
+  //   for(let i = a; i < tabContent.length; i++){
+  //     tabContent[i].classList.remove('show');
+  //     tabContent[i].classList.add('hide');
+  //   }
+  // }
+
+  // hideTabContent(1);
+  class HideShowTab {
+    constructor(info, tab, tabContent, showCSS, hideCSS){
+      this.info = document.querySelector('.' + info);
+      this.tab = document.querySelectorAll('.' + tab);
+      this.tabContent = document.querySelectorAll('.' + tabContent);
+      this.showCSS = showCSS;
+      this.hideCSS = hideCSS;
+      this.info.onclick = this.clickTab.bind(this);
     }
-  }
-
-  hideTabContent(1);
-
-  function showTabContent(b){
-    if(tabContent[b].classList.contains('hide')){
-      tabContent[b].classList.remove('hide');
-      tabContent[b].classList.add('show');
+  
+    hideTabContent(a){
+      for(let i = a; i < this.tabContent.length; i++){
+        this.tabContent[i].classList.remove(this.showCSS);
+        this.tabContent[i].classList.add(this.hideCSS);
+      }
     }
-  }
+    
+    showTabContent(b){
+      if(this.tabContent[b].classList.contains(this.hideCSS)){
+        this.tabContent[b].classList.remove(this.hideCSS);
+        this.tabContent[b].classList.add(this.showCSS);
+      }
+    }
 
-  info.addEventListener('click', function(event){
-    let target = event.target;
-
-    if(target && target.classList.contains('info-header-tab')){
-      for(let i = 0; i < tab.length; i++){
-        if(target == tab[i]){
-          hideTabContent(0);
-          showTabContent(i);
+    clickTab(){
+      let target = event.target;
+      for(let i = 0; i < this.tab.length; i++){
+        if(target == this.tab[i]){
+          this.hideTabContent(0);
+          this.showTabContent(i);
           break;
         }
       }
     } 
-  });
+  }
+  let tab = new HideShowTab('info', 'info-header-tab', 'info-tabcontent', 'show', 'hide');
+  tab.hideTabContent(1);
+  tab.clickTab();
+
+  // function showTabContent(b){
+  //   if(tabContent[b].classList.contains('hide')){
+  //     tabContent[b].classList.remove('hide');
+  //     tabContent[b].classList.add('show');
+  //   }
+  // }
+
+  // info.addEventListener('click', function(event){
+  //   let target = event.target;
+
+  //   if(target && target.classList.contains('info-header-tab')){
+  //     for(let i = 0; i < tab.length; i++){
+  //       if(target == tab[i]){
+  //         hideTabContent(0);
+  //         showTabContent(i);
+  //         break;
+  //       }
+  //     }
+  //   } 
+  // });
 
 
   //Timer
