@@ -26,15 +26,6 @@ window.addEventListener('DOMContentLoaded', function(){
     }
 
     clickTab(){
-      //   if(target && target.classList.contains('info-header-tab')){
-  //     for(let i = 0; i < tab.length; i++){
-  //       if(target == tab[i]){
-  //         hideTabContent(0);
-  //         showTabContent(i);
-  //         break;
-  //       }
-  //     }
-  //   }
       let target = event.target;
       for(let i = 0; i < this.tab.length; i++){
         if(target == this.tab[i]){
@@ -47,7 +38,7 @@ window.addEventListener('DOMContentLoaded', function(){
   }
   let tab = new HideShowTab('info', 'info-header-tab', 'info-tabcontent', 'show', 'hide');
   tab.hideTabContent(1);
-  tab.clickTab();
+
 
 
   //Timer
@@ -105,28 +96,31 @@ window.addEventListener('DOMContentLoaded', function(){
   setClock('timer', deadline);
 
   // Modal
-  function More(btn, btnClose){
-    let self = this;
-    self.btn = document.querySelector('.' + btn);
-    self.close = document.querySelector('.' + btnClose);
-    self.overlay = document.querySelector('.overlay');
+  class More {
+    constructor(btn, btnClose, cssModalBlock, cssAnimation) {
+      this.btn = document.querySelector('.' + btn);
+      this.close = document.querySelector('.' + btnClose);
+      this.overlay = document.querySelector('.' + cssModalBlock);
+      this.cssAnimation = cssAnimation;
+      this.btn.onclick = this.show.bind(this);
+      this.close.onclick = this.hide.bind(this);
+      // console.log(this.btn);
+    }
 
-    // console.log(self.overlay);
-
-    self.btn.addEventListener('click', function(){
-      self.overlay.style.display = 'block';
-      this.classList.add('more-splash');
+    show(){
+      this.overlay.style.display = 'block';
+      this.btn.classList.add(this.cssAnimation);
       document.body.style.overflow = 'hidden';
-    });
+    }
 
-    self.close.addEventListener('click', function(){
-      self.overlay.style.display = 'none';
-      self.btn.classList.remove('more-splash');
+    hide(){
+      this.overlay.style.display = 'none';
+      this.btn.classList.remove(this.cssAnimation);
       document.body.style.overflow = '';
-    });
+    }
+    
   }
-
-  let tabSection = new More('description-btn', 'popup-close');
-  let timerSection = new More('more', 'popup-close');
+  let tabSection = new More('modalbtn', 'popup-close', 'overlay', 'more-splash');
+  // let timerSection = new More('more', 'popup-close', 'overlay', 'more-splash');
 
 });
