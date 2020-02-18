@@ -1,19 +1,24 @@
 window.addEventListener('DOMContentLoaded', function(){
   'use strict';
-class Options {
-  constructor(height, width, bg, fontSize, textAlign){
-    this.height = height;
-    this.width = width;
-    this.bg = bg;
-    this.fontSize = fontSize;
-    this.textAlign = textAlign; 
+class SubmitForm {
+  constructor(cssForm){
+    this.loading = 'Загружаю...';
+    this.success = "Спасибо! Мы с вами скоро свяжемся.";
+    this.failure = "Что-то пошло не так!";
+
+    this.form = document.querySelector(cssForm);
+    this.input = this.form.getElementsByTagName('input');
+    this.statusMessage = document.createElement('div');
+    this.statusMessage.classList.add('status');
+
+    this.form.onsubmit = this.toSend.bind(this);
   }
 
-  divBlock(){
-    let div = document.createElement('div');
-    document.body.append(div);
+  toSend(){
+    console.log('Yes');
   }
 }
 
-let div = new Options();
+let formModal = new SubmitForm('.main-form');
+let formContact = new SubmitForm('#form');
 });

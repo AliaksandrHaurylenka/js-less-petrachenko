@@ -127,59 +127,83 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
   //Form
-  let message = {
-    loading: 'Загружаю...',
-    success: "Спасибо! Мы с вами скоро свяжемся.",
-    failure: "Что-то пошло не так!"
-  };
+  // let message = {
+  //   loading: 'Загружаю...',
+  //   success: "Спасибо! Мы с вами скоро свяжемся.",
+  //   failure: "Что-то пошло не так!"
+  // };
 
-  let form = document.querySelector('.main-form'),
-      input = form.getElementsByTagName('input'),
-      statusMessage = document.createElement('div');
+  // let form = document.querySelector('.main-form'),
+  //     input = form.getElementsByTagName('input'),
+  //     statusMessage = document.createElement('div');
 
-  statusMessage.classList.add('status');
+  // statusMessage.classList.add('status');
 
-  form.addEventListener('submit', function(event){
-    event.preventDefault();
-    form.appendChild(statusMessage);
+  // form.addEventListener('submit', function(event){
+  //   event.preventDefault();
+  //   form.appendChild(statusMessage);
 
-    let request = new XMLHttpRequest();
-    request.open('POST', 'server.php');
+  //   let request = new XMLHttpRequest();
+  //   request.open('POST', 'server.php');
 
-    //Отправка формы в обычном формате
-    // request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    // let formData = new FormData(form);
-    // request.send(formData);
-    // Конец Отправка формы в обычном формате
+  //   //Отправка формы в обычном формате
+  //   // request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  //   // let formData = new FormData(form);
+  //   // request.send(formData);
+  //   // Конец Отправка формы в обычном формате
 
-    //Отправка формы в json формате
-    request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+  //   //Отправка формы в json формате
+  //   request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
-    let formData = new FormData(form);
+  //   let formData = new FormData(form);
 
-    let obj = {};
-    formData.forEach(function(value, key){
-      obj[key] = value;
-    });
+  //   let obj = {};
+  //   formData.forEach(function(value, key){
+  //     obj[key] = value;
+  //   });
 
-    let json = JSON.stringify(obj);
+  //   let json = JSON.stringify(obj);
 
-    request.send(json);
-    //Конец Отправка формы в json формате
+  //   request.send(json);
+  //   //Конец Отправка формы в json формате
 
-    request.addEventListener('readystatechange', function(){
-      if(request.readyState < 4){
-        statusMessage.innerHTML = message.loading;
-      } else if(request.readyState === 4 && request.status == 200){
-        statusMessage.innerHTML = message.success;
-      } else {
-        statusMessage.innerHTML = message.failure;
-      }
-    });
+  //   request.addEventListener('readystatechange', function(){
+  //     if(request.readyState < 4){
+  //       statusMessage.innerHTML = message.loading;
+  //     } else if(request.readyState === 4 && request.status == 200){
+  //       statusMessage.innerHTML = message.success;
+  //     } else {
+  //       statusMessage.innerHTML = message.failure;
+  //     }
+  //   });
 
-    for(let i = 0; i < input.length; i++){
-      input[i].value = '';
+  //   for(let i = 0; i < input.length; i++){
+  //     input[i].value = '';
+  //   }
+  // });
+
+  class SubmitForm {
+    constructor(cssForm){
+      this.loading = 'Загружаю...';
+      this.success = "Спасибо! Мы с вами скоро свяжемся.";
+      this.failure = "Что-то пошло не так!";
+  
+      this.form = document.querySelector(cssForm);
+      this.input = this.form.getElementsByTagName('input');
+      this.statusMessage = document.createElement('div');
+      this.statusMessage.classList.add('status');
+  
+      this.form.onsubmit = this.toSend.bind(this);
     }
-  });
+  
+    toSend(){
+      // console.log('Yes');
+      event.preventDefault();
+    }
+  }
+  
+  let formModal = new SubmitForm('.main-form');
+      // formModal.toSend();
+  let formContact = new SubmitForm('#form');
 
 });
