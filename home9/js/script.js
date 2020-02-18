@@ -183,12 +183,12 @@ window.addEventListener('DOMContentLoaded', function(){
   // });
 
   class SubmitForm {
-    constructor(cssForm){
+    constructor(cssOrIdForm){
       this.loading = 'Загружаю...';
       this.success = "Спасибо! Мы с вами скоро свяжемся.";
       this.failure = "Что-то пошло не так!";
   
-      this.form = document.querySelector(cssForm);
+      this.form = document.querySelector(cssOrIdForm);
       this.input = this.form.getElementsByTagName('input');
       this.statusMessage = document.createElement('div');
       this.statusMessage.classList.add('status');
@@ -197,13 +197,47 @@ window.addEventListener('DOMContentLoaded', function(){
     }
   
     toSend(){
-      // console.log('Yes');
       event.preventDefault();
+
+      this.form.appendChild(this.statusMessage);
+
+      let request = new XMLHttpRequest();
+      request.open('POST', 'server.php');
+
+      //Отправка формы в обычном формате
+      // request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      // let formData = new FormData(this.form);
+      // request.send(formData);
+      // Конец Отправка формы в обычном формате
+
+      //Отправка формы в json формате
+      request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+      let formData = new FormData(this.form);
+      let obj = {};
+      formData.forEach(function(value, key){
+        obj[key] = value;
+      });
+      let json = JSON.stringify(obj);
+      request.send(json);
+      //Конец Отправка формы в json формате
+
+      request.addEventListener('readystatechange', () => {
+        if(request.readyState < 4){
+          this.statusMessage.innerHTML = this.loading;
+        } else if(request.readyState === 4 && request.status == 200){
+          this.statusMessage.innerHTML = this.success;
+        } else {
+          this.statusMessage.innerHTML = this.failure;
+        }
+      });
+
+      for(let i = 0; i < this.input.length; i++){
+        this.input[i].value = '';
+      }
     }
   }
   
   let formModal = new SubmitForm('.main-form');
-      // formModal.toSend();
   let formContact = new SubmitForm('#form');
 
 });
