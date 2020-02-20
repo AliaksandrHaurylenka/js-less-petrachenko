@@ -11,13 +11,12 @@
 //     request.addEventListener('readystatechange', function() {
 //         if (request.readyState === 4 && request.status == 200) {
 //             let data = JSON.parse(request.response);
-
+//             console.log(data);
 //             inputUsd.value = inputRub.value / data.usd;
 //         } else {
 //             inputUsd.value = "Что-то пошло не так!";
 //         }
 //     });
-
 // });
 
 let inputRub = document.getElementById('rub'),
@@ -35,25 +34,25 @@ inputRub.addEventListener('input', () => {
 
             request.onreadystatechange = () => {
                 if (request.readyState === 4 && request.status == 200) {
-                    resolve();
+                    resolve(data);
                 } else {
                     reject();
                 }
-            }
+            };
 
             request.send();
-        })
+        });
     }
     
     inputRub()
-            .then(() => {
+            .then((data) => {
                 // let data = JSON.parse(request.response);
                 inputUsd.value = inputRub.value / data.usd;
             })
             .catch(() => {
-                console.log(data);
+                // console.log(data);
                 inputUsd.value = "Что-то пошло не так!";
-            })
+            });
    
     
     // request.addEventListener('readystatechange', function() {
