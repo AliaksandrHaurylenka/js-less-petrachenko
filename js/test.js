@@ -33,3 +33,15 @@ let div = new Options('50px', '500px', 'green', '20px', 'center');
 let div1 = new Options('50px', '500px', 'yellow', '20px', 'center');
     div1.divBlock();
 });
+
+
+let ask = (question, yes, no) => {
+  if(confirm(question)) yes()
+  else no();
+}
+
+ask(
+  "Вы согласны?",
+  () => { alert("Вы согласились."); },
+  () => { alert("Вы отменили выполнение."); }
+);
